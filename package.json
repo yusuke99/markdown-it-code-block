@@ -8,6 +8,8 @@
     "build:src": "babel ./src -x '.ts' --ignore '**/__test__/*' -d ./dist",
     "build:type": "tsc -p ./tsconfig.build.json",
     "changeset": "changeset",
+    "ci:version": "changeset version",
+    "ci:publish": "changeset publish",
     "dev": "nodemon -w './src' -w './styles' -w './playground' -e 'css,md,ts' -x 'run-s build playground'",
     "format": "biome format . --write",
     "lint": "biome lint .",
