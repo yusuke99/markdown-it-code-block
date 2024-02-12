@@ -1,0 +1,35 @@
+{
+  "name": "markdown-it-code-block",
+  "description": "Code-block plugin for markdown-it",
+  "version": "0.0.0",
+  "author": "Yusuke <https://github.com/yusuke99>",
+  "scripts": {
+    "format": "biome format . --write",
+    "lint": "biome lint .",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm format",
+    "pre-push": "pnpm run-s format lint typecheck test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "npm-run-all": "^4.1.5",
+    "simple-git-hooks": "^2.9.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.1",
+    "vitest": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "homepage": "https://github.com/yusuke99/markdown-it-code-block#readme",
+  "bugs": "https://github.com/yusuke99/markdown-it-code-block/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yusuke99/markdown-it-code-block.git"
+  }
+}
