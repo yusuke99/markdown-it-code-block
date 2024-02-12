@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-code-block",
   "description": "Code-block plugin for markdown-it",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "author": "Yusuke <https://github.com/yusuke99>",
   "scripts": {
@@ -61,7 +61,10 @@
     ".": "./dist/index.js",
     "./styles/*": "./styles/*"
   },
-  "files": ["dist", "styles"],
+  "files": [
+    "dist",
+    "styles"
+  ],
   "keywords": [
     "markdown",
     "markdown-it",
