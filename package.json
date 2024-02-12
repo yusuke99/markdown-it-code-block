@@ -2,6 +2,7 @@
   "name": "markdown-it-code-block",
   "description": "Code-block plugin for markdown-it",
   "version": "0.0.0",
+  "license": "MIT",
   "author": "Yusuke <https://github.com/yusuke99>",
   "scripts": {
     "build": "rimraf ./dist && run-p build:*",
