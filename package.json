@@ -47,6 +47,19 @@
   },
   "type": "module",
   "sideEffects": false,
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./styles/*": "./styles/*"
+  },
+  "files": ["dist", "styles"],
+  "keywords": [
+    "markdown",
+    "markdown-it",
+    "markdown-it-plugin",
+    "code-block",
+    "highlight"
+  ],
   "homepage": "https://github.com/yusuke99/markdown-it-code-block#readme",
   "bugs": "https://github.com/yusuke99/markdown-it-code-block/issues",
   "repository": {
