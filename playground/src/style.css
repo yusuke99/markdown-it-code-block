@@ -3,7 +3,7 @@
   --font-code: "Source Code Pro", monospace;
   --c-text: hsl(229, 23%, 24%);
   --bg-body: hsl(0, 0%, 100%);
-  --header-height: 104px
+  --header-height: 104px;
 }
 
 :root.dark {

@@ -1,3 +1,6 @@
 packages:
-  - '.'
-  - 'playground'
+  - .
+  - playground
+
+patchedDependencies:
+  babel-plugin-prismjs: patches/babel-plugin-prismjs.patch
