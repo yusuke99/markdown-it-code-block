@@ -1,0 +1,335 @@
+diff --git a/lib/getComponents.js b/lib/getComponents.js
+index d2f463ca6e65edc1792cf3e13f324415afb51d78..cd17523edd30e972bc67d3c5a7c572a89d5b0bf1 100644
+--- a/lib/getComponents.js
++++ b/lib/getComponents.js
+@@ -4,29 +4,19 @@ Object.defineProperty(exports, "__esModule", {
+   value: true
+ });
+ exports["default"] = void 0;
+-
+ var _components = _interopRequireDefault(require("prismjs/components.js"));
+-
+ var _dependencies = _interopRequireDefault(require("prismjs/dependencies.js"));
+-
+-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+-
+-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+-
+-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+-
+-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+-
+-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+-
+-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+-
+-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+-
+-function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+-
+-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+-
++function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
++function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
++function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
++function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
++function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
++function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
++function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
++function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
++function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
++function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
++function _arrayWithHoles(r) { if (Array.isArray(r)) return r; } /* eslint-disable valid-jsdoc */
+ /**
+  * @param {string} type
+  * @returns {(name: string) => string}
+@@ -36,52 +26,46 @@ var getPath = function getPath(type) {
+     return "prismjs/".concat(_components["default"][type].meta.path.replace(/\{id\}/g, name));
+   };
+ };
++
+ /**
+  * @param {string} dep
+  * @returns {boolean}
+  */
+-
+-
+ var isPlugin = function isPlugin(dep) {
+   return _components["default"].plugins[dep] != null;
+ };
++
+ /**
+  * @param {string} type
+  * @param {string} name
+  * @returns {boolean}
+  */
+-
+-
+ var getNoCSS = function getNoCSS(type, name) {
+   return !!_components["default"][type][name].noCSS;
+ };
++
+ /**
+  * @param {string} theme
+  * @returns {string}
+  */
+-
+-
+ var getThemePath = function getThemePath(theme) {
+   if (theme.includes('/')) {
+     var _theme$split = theme.split('/'),
+-        _theme$split2 = _slicedToArray(_theme$split, 2),
+-        themePackage = _theme$split2[0],
+-        themeName = _theme$split2[1];
+-
++      _theme$split2 = _slicedToArray(_theme$split, 2),
++      themePackage = _theme$split2[0],
++      themeName = _theme$split2[1];
+     return "".concat(themePackage, "/themes/prism-").concat(themeName, ".css");
+   }
+-
+   if (theme === 'default') {
+     theme = 'prism';
+   } else {
+     theme = "prism-".concat(theme);
+   }
+-
+   return getPath('themes')(theme);
+ };
+-
+ var getPluginPath = getPath('plugins');
+ var getLanguagePath = getPath('languages');
++
+ /**
+  * @param {Options} [options]
+  * @returns {string[]}
+@@ -92,35 +76,28 @@ var getLanguagePath = getPath('languages');
+  * @property {string} [theme]
+  * @property {boolean} [css]
+  */
+-
+-var _default = function _default() {
++var _default = exports["default"] = function _default() {
+   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+-      _ref$languages = _ref.languages,
+-      languages = _ref$languages === void 0 ? [] : _ref$languages,
+-      _ref$plugins = _ref.plugins,
+-      plugins = _ref$plugins === void 0 ? [] : _ref$plugins,
+-      theme = _ref.theme,
+-      _ref$css = _ref.css,
+-      css = _ref$css === void 0 ? false : _ref$css;
+-
++    _ref$languages = _ref.languages,
++    languages = _ref$languages === void 0 ? [] : _ref$languages,
++    _ref$plugins = _ref.plugins,
++    plugins = _ref$plugins === void 0 ? [] : _ref$plugins,
++    theme = _ref.theme,
++    _ref$css = _ref.css,
++    css = _ref$css === void 0 ? false : _ref$css;
+   if (languages === 'all') {
+     languages = Object.keys(_components["default"].languages).filter(function (l) {
+       return l !== 'meta';
+     });
+   }
+-
+   return [].concat(_toConsumableArray((0, _dependencies["default"])(_components["default"], [].concat(_toConsumableArray(languages), _toConsumableArray(plugins))).getIds().reduce(function (deps, dep) {
+     // Plugins can have language dependencies.
+     var add = [isPlugin(dep) ? getPluginPath(dep) : getLanguagePath(dep)];
+-
+     if (css && isPlugin(dep) && !getNoCSS('plugins', dep)) {
+       add.unshift(getPluginPath(dep) + '.css');
+     }
+-
+-    return [].concat(_toConsumableArray(deps), add);
+-  },
+-  /** @type {string[]} */
+-  [])), _toConsumableArray(css && theme ? [getThemePath(theme)] : []));
++    return [].concat(_toConsumableArray(deps), _toConsumableArray(add.map(function (dep) {
++      return dep.endsWith('.css') ? dep : "".concat(dep, ".js");
++    })));
++  }, /** @type {string[]} */[])), _toConsumableArray(css && theme ? [getThemePath(theme)] : []));
+ };
+\ No newline at end of file
+-
+-exports["default"] = _default;
+\ No newline at end of file
+diff --git a/lib/index.js b/lib/index.js
+index 1997167673740b52f1db8be47ed4a6d9ab20940f..d4fad7e19a6265f31f4877b0b0538b4f1c413186 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -4,25 +4,19 @@ Object.defineProperty(exports, "__esModule", {
+   value: true
+ });
+ exports["default"] = void 0;
+-
+ var _getComponents = _interopRequireDefault(require("./getComponents"));
+-
+-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+-
+-var CORE = 'prismjs/components/prism-core';
+-
+-var _default = function _default(_ref) {
++function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
++var CORE = 'prismjs/components/prism-core.js';
++var _default = exports["default"] = function _default(_ref) {
+   var t = _ref.types;
+   return {
+     name: 'prismjs',
+     visitor: {
+       ImportDeclaration: function ImportDeclaration(path, _ref2) {
+         var opts = _ref2.opts;
+-
+         if (path.node.source.value !== 'prismjs') {
+           return;
+         }
+-
+         path.replaceWith(t.importDeclaration(path.node.specifiers, t.stringLiteral(CORE)));
+         path.insertAfter((0, _getComponents["default"])(opts).map(function (component) {
+           return t.importDeclaration([], t.stringLiteral(component));
+@@ -31,5 +25,3 @@ var _default = function _default(_ref) {
+     }
+   };
+ };
+\ No newline at end of file
+-
+-exports["default"] = _default;
+\ No newline at end of file
+diff --git a/src/getComponents.js b/src/getComponents.js
+index f9f2b7c188a2021e3ec8e836162d5a52a5a97b9f..9673e6f412c6832826b385f125dc9cfe4e4b7428 100644
+--- a/src/getComponents.js
++++ b/src/getComponents.js
+@@ -6,14 +6,14 @@ import getLoader from 'prismjs/dependencies.js';
+  * @param {string} type
+  * @returns {(name: string) => string}
+  */
+-const getPath = type => name =>
+-    `prismjs/${config[type].meta.path.replace(/\{id\}/g, name)}`;
++const getPath = (type) => (name) =>
++  `prismjs/${config[type].meta.path.replace(/\{id\}/g, name)}`;
+ 
+ /**
+  * @param {string} dep
+  * @returns {boolean}
+  */
+-const isPlugin = dep => config.plugins[dep] != null;
++const isPlugin = (dep) => config.plugins[dep] != null;
+ 
+ /**
+  * @param {string} type
+@@ -26,18 +26,18 @@ const getNoCSS = (type, name) => !!config[type][name].noCSS;
+  * @param {string} theme
+  * @returns {string}
+  */
+-const getThemePath = theme => {
+-    if (theme.includes('/')) {
+-        const [themePackage, themeName] = theme.split('/');
+-        return `${themePackage}/themes/prism-${themeName}.css`
+-    }
+-    if (theme === 'default') {
+-        theme = 'prism';
+-    } else {
+-        theme = `prism-${theme}`;
+-    }
++const getThemePath = (theme) => {
++  if (theme.includes('/')) {
++    const [themePackage, themeName] = theme.split('/');
++    return `${themePackage}/themes/prism-${themeName}.css`;
++  }
++  if (theme === 'default') {
++    theme = 'prism';
++  } else {
++    theme = `prism-${theme}`;
++  }
+ 
+-    return getPath('themes')(theme);
++  return getPath('themes')(theme);
+ };
+ 
+ const getPluginPath = getPath('plugins');
+@@ -54,21 +54,26 @@ const getLanguagePath = getPath('languages');
+  * @property {boolean} [css]
+  */
+ export default ({ languages = [], plugins = [], theme, css = false } = {}) => {
+-    if (languages === 'all') {
+-        languages = Object.keys(config.languages).filter(l => l !== 'meta');
+-    }
++  if (languages === 'all') {
++    languages = Object.keys(config.languages).filter((l) => l !== 'meta');
++  }
+ 
+-    return [
+-        ...getLoader(config, [...languages, ...plugins]).getIds().reduce((deps, dep) => {
+-            // Plugins can have language dependencies.
+-            const add = [isPlugin(dep) ? getPluginPath(dep) : getLanguagePath(dep)];
++  return [
++    ...getLoader(config, [...languages, ...plugins])
++      .getIds()
++      .reduce((deps, dep) => {
++        // Plugins can have language dependencies.
++        const add = [isPlugin(dep) ? getPluginPath(dep) : getLanguagePath(dep)];
+ 
+-            if (css && isPlugin(dep) && !getNoCSS('plugins', dep)) {
+-                add.unshift(getPluginPath(dep) + '.css');
+-            }
++        if (css && isPlugin(dep) && !getNoCSS('plugins', dep)) {
++          add.unshift(getPluginPath(dep) + '.css');
++        }
+ 
+-            return [...deps, ...add];
+-        }, /** @type {string[]} */([])),
+-        ...(css && theme ? [getThemePath(theme)] : [])
+-    ];
++        return [
++          ...deps,
++          ...add.map((dep) => (dep.endsWith('.css') ? dep : `${dep}.js`)),
++        ];
++      }, /** @type {string[]} */ ([])),
++    ...(css && theme ? [getThemePath(theme)] : []),
++  ];
+ };
+diff --git a/src/index.js b/src/index.js
+index ca03cf709af143360306560d80df10427fd8b44e..2e7c490c2ab407d9898ea153ab2d86a2ca8a03b6 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -1,24 +1,24 @@
+ import getComponents from './getComponents';
+ 
+-const CORE = 'prismjs/components/prism-core';
++const CORE = 'prismjs/components/prism-core.js';
+ 
+ export default ({ types: t }) => ({
+-    name: 'prismjs',
+-    visitor: {
+-        ImportDeclaration(path, { opts }) {
+-            if (path.node.source.value !== 'prismjs') {
+-                return;
+-            }
++  name: 'prismjs',
++  visitor: {
++    ImportDeclaration(path, { opts }) {
++      if (path.node.source.value !== 'prismjs') {
++        return;
++      }
+ 
+-            path.replaceWith(t.importDeclaration(
+-                path.node.specifiers,
+-                t.stringLiteral(CORE)
+-            ));
++      path.replaceWith(
++        t.importDeclaration(path.node.specifiers, t.stringLiteral(CORE))
++      );
+ 
+-            path.insertAfter(
+-                getComponents(opts)
+-                    .map(component => t.importDeclaration([],t.stringLiteral(component)))
+-            );
+-        }
+-    }
++      path.insertAfter(
++        getComponents(opts).map((component) =>
++          t.importDeclaration([], t.stringLiteral(component))
++        )
++      );
++    },
++  },
+ });
