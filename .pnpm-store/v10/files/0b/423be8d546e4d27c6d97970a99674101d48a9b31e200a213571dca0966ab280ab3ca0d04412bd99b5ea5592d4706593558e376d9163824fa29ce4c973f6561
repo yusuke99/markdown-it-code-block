@@ -1,0 +1,103 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var _components = _interopRequireDefault(require("prismjs/components.js"));
+var _dependencies = _interopRequireDefault(require("prismjs/dependencies.js"));
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; } /* eslint-disable valid-jsdoc */
+/**
+ * @param {string} type
+ * @returns {(name: string) => string}
+ */
+var getPath = function getPath(type) {
+  return function (name) {
+    return "prismjs/".concat(_components["default"][type].meta.path.replace(/\{id\}/g, name));
+  };
+};
+
+/**
+ * @param {string} dep
+ * @returns {boolean}
+ */
+var isPlugin = function isPlugin(dep) {
+  return _components["default"].plugins[dep] != null;
+};
+
+/**
+ * @param {string} type
+ * @param {string} name
+ * @returns {boolean}
+ */
+var getNoCSS = function getNoCSS(type, name) {
+  return !!_components["default"][type][name].noCSS;
+};
+
+/**
+ * @param {string} theme
+ * @returns {string}
+ */
+var getThemePath = function getThemePath(theme) {
+  if (theme.includes('/')) {
+    var _theme$split = theme.split('/'),
+      _theme$split2 = _slicedToArray(_theme$split, 2),
+      themePackage = _theme$split2[0],
+      themeName = _theme$split2[1];
+    return "".concat(themePackage, "/themes/prism-").concat(themeName, ".css");
+  }
+  if (theme === 'default') {
+    theme = 'prism';
+  } else {
+    theme = "prism-".concat(theme);
+  }
+  return getPath('themes')(theme);
+};
+var getPluginPath = getPath('plugins');
+var getLanguagePath = getPath('languages');
+
+/**
+ * @param {Options} [options]
+ * @returns {string[]}
+ *
+ * @typedef Options
+ * @property {string[] | 'all'} [languages]
+ * @property {string[]} [plugins]
+ * @property {string} [theme]
+ * @property {boolean} [css]
+ */
+var _default = exports["default"] = function _default() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref$languages = _ref.languages,
+    languages = _ref$languages === void 0 ? [] : _ref$languages,
+    _ref$plugins = _ref.plugins,
+    plugins = _ref$plugins === void 0 ? [] : _ref$plugins,
+    theme = _ref.theme,
+    _ref$css = _ref.css,
+    css = _ref$css === void 0 ? false : _ref$css;
+  if (languages === 'all') {
+    languages = Object.keys(_components["default"].languages).filter(function (l) {
+      return l !== 'meta';
+    });
+  }
+  return [].concat(_toConsumableArray((0, _dependencies["default"])(_components["default"], [].concat(_toConsumableArray(languages), _toConsumableArray(plugins))).getIds().reduce(function (deps, dep) {
+    // Plugins can have language dependencies.
+    var add = [isPlugin(dep) ? getPluginPath(dep) : getLanguagePath(dep)];
+    if (css && isPlugin(dep) && !getNoCSS('plugins', dep)) {
+      add.unshift(getPluginPath(dep) + '.css');
+    }
+    return [].concat(_toConsumableArray(deps), _toConsumableArray(add.map(function (dep) {
+      return dep.endsWith('.css') ? dep : "".concat(dep, ".js");
+    })));
+  }, /** @type {string[]} */[])), _toConsumableArray(css && theme ? [getThemePath(theme)] : []));
+};
