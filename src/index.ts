@@ -17,9 +17,9 @@ const calculateHighlightRange = (ranges: string) => {
   const highlightRange = [];
   for (const range of ranges.split(',')) {
     if (!range.includes('-')) {
-      highlightRange.push(parseInt(range));
+      highlightRange.push(Number.parseInt(range));
     }
-    const [start, end] = range.split('-').map((r) => parseInt(r));
+    const [start, end] = range.split('-').map((r) => Number.parseInt(r));
     for (let i = start; i <= end; i++) {
       highlightRange.push(i);
     }
